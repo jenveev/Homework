@@ -1,0 +1,167 @@
+Objective: Develop an employee salary reporting application. This exercise will reinforce knowledge of Java inheritance hierarchies and interfaces.
+
+Technical Specifications
+
+Develop the following interface and classes. Provide appropriate documentation to your source code. 
+
+Package: emppkg
+
+  Interface:	Payable
+  Description: 	Interface used by all Employee sub-classes. This interface is already developed and is provided with this document. Except for documentation, DO NOT change or modify this interface. Use it in the application as is.
+
+  Class:		Employee
+  Description:	Base class for all employee-type classes.
+
+  Instance variables:
+		private int empId;
+		private String empFirstName;
+		private String empLastName;
+		private double empSalary;
+		private String empHireDate;
+		private String empPosition;
+
+  Constructors:	
+		public Employee()	Assign default values to instance variables.
+
+		public Employee(int id, String fname, String lname,
+			        String hireDate, String pos)
+		   Assign arguments passed to corresponding instance variables.
+
+  Methods:	Write ‘setter’ and ‘getter’ methods for the above-mentioned instance variables:
+		Important: The setEmpSalary(...) method MUST be declared with visibility access 'protected'. All the other 'setter' and 'getter' methods MUST be declared 'public'.
+
+		Provide a toString() method for this class.
+
+
+  Class:		ITEngineer
+  Description:	Class to represent an IT software engineer employee – a sub-class of  Employee and implements the Payable interface.
+
+  Instance variable declarations:
+		public static final int LEVEL1 = 1;
+		public static final int LEVEL2 = 2;
+		private int gradeLevel;
+		Note: An engineer's grade level will be used in computing his/her salary.
+
+  
+  Constructors:
+		public ITEngineer()        	Assign LEVEL1 to grade level in this constructor.
+
+		public ITEngineer(int id, String fname, String lname,
+			        String hireDate, String pos, int level)
+	
+		       Assign the argument passed as 'level' to grade level. Use the rest of the arguments to initialize this employee.
+
+  Methods:
+	public void computeSalary(double baseSalary)
+		     Calculate the employee's salary based on the following rules:
+		      For level 1 employee:   salary = baseSalary * Payable.SAL_FACTOR_1
+		      For level 2 employee:   salary = baseSalary * Payable.SAL_FACTOR_2
+
+	Provide 'setter' and 'getter' methods for gradeLevel instance variable.
+
+
+  Class:		AdminAssist
+  Description:	Class to represent an Administrative Assistant employee – a sub-class of  Employee and implements the Payable interface.
+  
+   Instance variables:
+		private int status;  
+		private final double HALF_BASE = 0.5;
+
+		Status indicates whether the employee works half-time or full-time. HALF_BASE is used to compute employee's salary (see computeSalary()).
+
+  Constructors:
+		public AdminAssist()     Assign Payable.PART_TIME to status(instance variable).
+
+		public AdminAssist(int id, String fname, String lname,
+	        String hireDate, String pos, int stat)
+
+		Assign the argument stat to  status(instance variable). Use the rest of the arguments to assign to their corresponding instance variables.
+
+  Methods:
+		public void computeSalary(double baseSalary)
+  		Calculate the employee's salary based on the following rules:
+		   For part-time employee:  salary = baseSalary * HALF_BASE
+		   For full-time employee:  salary = baseSalary
+
+		Provide 'setter' and 'getter' methods for status instance variable.
+
+
+
+Class:		ProjMgr
+Description:	Class to represent a Project Manager employee – a sub-class of  Employee and implements the Payable interface.
+
+  Instance variables:
+
+		public static final int HOURLY_CONV = 2080;
+		private boolean consultant;
+
+		HOURLY_CONV is used to calculate salary (see computeSalary()). 'consultant ' indicates whether employee is a consultant or not. Default is non-consultant, i.e., consultant = false.
+
+  Constructors:
+ 		public ProjMgr()      Assign false to consultant instance variable.
+
+		public ProjMgr(int id, String fname, String lname,
+	        String hireDate, String pos, boolean cons)
+
+		Assign the argument cons to  consultant(instance variable). Use the rest of the arguments to assign to their corresponding instance variables.
+
+  Methods:
+		public void computeSalary(double baseSalary)
+		 If project manager is a consultant: salary = baseSalary/HOURLY_CONV
+		 If project manager is not a consultant: salary = baseSalary
+
+		public boolean ifConsultant()
+		  Just return whatever the instance variable consultant is set to.
+
+
+Class:		EmpTracker
+Description:	This class has the service methods to store, process, and report on Employee objects.
+
+  Instance variables:
+		private ArrayList emps;	This ArrayList will store all employees created.
+
+  Constructor:
+		public EmpTracker()
+		Instantiate the Arraylist (declared as instance variable) in this constructor.
+
+  Methods:
+
+		public void addEmployee(Payable emp)
+		Store the Payable object reference (passed as argument) in the ArrayList.
+
+
+
+
+		public void reportITEngs()
+		Loop through the ArrayList and find all the ITEngineer object references stored. For each ITEngineer, print the first name, last name, position, and salary.
+		Hint:  Use the instanceof operator to test for the type of an object.
+
+		public void reportAdminAssist()
+		Loop through the ArrayList and find all the AdminAssist object references stored. For each AdminAssist, print the first name, last name, position, and salary.
+
+		public void reportProjMgr()
+		Loop through the ArrayList and find all the ProjMgr object references stored. For each ProjMgr, print the first name, last name, position, and salary.
+		But wait, there's more...
+		If the project manager is a consultant, print the per hour salary like so:  45.25/hr
+
+
+Package: emptestpkg
+
+Class:		EmpTester
+Description: This class will be used to test the application. This class is already developed and handed out with this document. DO NOT change or alter anything in this class. It must be used to test the application as is.
+
+
+Expected output:
+
+ Employee name			Position		Salary
+
+
+ Lady Luck				Admin Asst V		80000.0
+ Peter Pan				Admin Asst II		10000.0
+ Jim Burnworth			IT Engineer IV	144000.0
+ Tiffany Lakosky			IT Engineer I		98000.0
+ Daddy Longlegs			C-Proj Mgr II		67.3076923076923/hr
+ Mommy Shortlegs			Proj Mgr III		150300.0
+
+
+(Note: Do not worry too much about alignment and decimal precision. Any output that looks close to the listing above is acceptable.)
